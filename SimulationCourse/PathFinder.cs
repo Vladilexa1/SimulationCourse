@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -19,44 +21,41 @@ namespace SimulationCourse
         }
         private Node SearchPath(Coordinates targetCoordinates)
         {
-            Queue<Node> queue = new Queue<Node>();
+            HashSet<Node> queue = new HashSet<Node>();
             HashSet<Node> chectNode = new HashSet<Node>();
-            startNode.H = targetCoordinates.CalculatedDistanse(startNode.coordinates, targetCoordinates);
-            queue.Enqueue(startNode);
-           
+            startNode.H = Distanse(startNode.coordinates, targetCoordinates);
+            queue.Add(startNode);
+
             while (queue.Count > 0)
             {
                 Node current = queue.Where(x => x.F == queue.Min(y => y.F)).FirstOrDefault();
-               
-                if (current.coordinates.X == targetCoordinates.X && current.coordinates.Y == targetCoordinates.Y) return current;
-            
-                chectNode.Add(current);
-            
-                current = queue.Dequeue();
 
-                if (current.coordinates.X == targetCoordinates.X && current.coordinates.Y == targetCoordinates.Y)
-                {
-                    return current;
-                }
+                if (current.coordinates.Equals(targetCoordinates)) return current;
+
+                chectNode.Add(current);
+
+                queue.Remove(current);
 
                 var neughbors = GetNeighbors(current);
                 foreach (var neighbor in neughbors)
                 {
                     if (chectNode.Contains(neighbor)) continue;
-                    int tentativeG = current.G + 1;
-                    if (!queue.Contains(neighbor) || tentativeG < neighbor.G)
+                    if (!queue.Contains(neighbor))
                     {
                         neighbor.lastNode = current;
-                        neighbor.G = tentativeG;
-                        neighbor.H = targetCoordinates.CalculatedDistanse(neighbor.coordinates, targetCoordinates);
+                        neighbor.H = Distanse(neighbor.coordinates, targetCoordinates);
                         if (!queue.Contains(neighbor))
                         {
-                            queue.Enqueue(neighbor);
+                            queue.Add(neighbor);
                         }
                     }
                 }
             }
             return startNode;
+        }
+        private int Distanse(Coordinates coordinates1, Coordinates coordinates2)
+        {
+            return Math.Abs(coordinates2.X - coordinates1.X) + Math.Abs(coordinates2.Y - coordinates1.Y);
         }
         public List<Coordinates> GetPath(Coordinates target)
         {
@@ -77,11 +76,11 @@ namespace SimulationCourse
             var rightNeighbors = new Coordinates(current.coordinates.X + 1, current.coordinates.Y);
             var topNeighbors = new Coordinates(current.coordinates.X, current.coordinates.Y - 1);
             var bottomNeighbors = new Coordinates(current.coordinates.X, current.coordinates.Y + 1);
-            
-            if (IsMoveable(rightNeighbors))  neighbors.Add(new Node(rightNeighbors, current, current.G + 1));
-            if (IsMoveable(leftNeighbors))   neighbors.Add(new Node(leftNeighbors, current, current.G + 1));
+
+            if (IsMoveable(rightNeighbors)) neighbors.Add(new Node(rightNeighbors, current, current.G + 1));
+            if (IsMoveable(leftNeighbors)) neighbors.Add(new Node(leftNeighbors, current, current.G + 1));
             if (IsMoveable(bottomNeighbors)) neighbors.Add(new Node(bottomNeighbors, current, current.G + 1));
-            if (IsMoveable(topNeighbors))    neighbors.Add(new Node(topNeighbors, current, current.G + 1));
+            if (IsMoveable(topNeighbors)) neighbors.Add(new Node(topNeighbors, current, current.G + 1));
             return neighbors;
         }
 
@@ -92,22 +91,6 @@ namespace SimulationCourse
             return true;
         }
     }
-    public class Node
-    {
-        public Coordinates coordinates;
-        public Node lastNode;
-        public int G;
-        public int H;
-        public int F { get => G + H; }
-        public Node(Coordinates coordinates, Node lastNode, int G)
-        {
-            this.coordinates = coordinates;
-            this.lastNode = lastNode;
-            this.G = G;
-            this.H = 0;
-        }
-    }
-    
 }
 
 

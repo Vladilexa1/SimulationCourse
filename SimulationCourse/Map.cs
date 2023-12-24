@@ -22,7 +22,7 @@ namespace SimulationCourse
         internal void NewEntitySetup(Entity newEntity)
         {
             newEntity.color = Color.Red;
-            Maps.Add(newEntity.coordinates, newEntity);
+            Maps.Add(newEntity.coordinates, newEntity); // exeption
         }
         public void DeleteEntitys(Coordinates coordinates)
         {

@@ -41,8 +41,8 @@ namespace SimulationCourse
         {
             int x = coordinates.X;
             int y = coordinates.Y;
-            if (x < 1 || x > Program.MAP_HEIGTH - 1) return false;
-            if (y < 1 || y > Program.MAP_WIDTH - 1) return false;
+            if (x < 1 || x > Program.MAP_HEIGTH - 2) return false;
+            if (y < 1 || y > Program.MAP_WIDTH - 2) return false;
             return true;
         }
         public int CalculatedDistanse(Coordinates coordinates1, Coordinates coordinates2)

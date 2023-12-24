@@ -45,29 +45,14 @@ namespace SimulationCourse.Entitys
             {
                 if (coordinates.CalculatedDistanse(this.coordinates, coordinatesNearestFood) != 1)
                 {
-                    this.coordinates = PathToFood[i];
+                    if (PathToFood.Count > i)
+                    {
+                        this.coordinates = PathToFood[i];
+                    }
+                    
                 }
             }
         }
-        //private bool PathToFoodIsClear(Map map)
-        //{
-        //    if (PathToFood == null) return false;
-        //    for (int i = 0; i < PathToFood.Count - 1; i++)
-        //    {
-        //        if (!map.IsSquareEmpty(PathToFood[i]))
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        //private bool LastFoodHaveInMap(Map map)
-        //{
-        //    if (coordinatesNearestFood == null) return false;
-        //    return map.ThisCoordinatesIsGrass(coordinatesNearestFood);
-        //}
-
         public override Coordinates FindNearestFood(Map map, Coordinates coordinates)
         {
             HashSet<Coordinates> coordinatesFood = new HashSet<Coordinates>();

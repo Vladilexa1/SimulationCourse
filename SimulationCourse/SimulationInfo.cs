@@ -37,5 +37,15 @@ namespace SimulationCourse
             Console.WriteLine($"Count Rock = {countRock}" + "  " + $"Count Grass = {countGrass}" + "  " 
                 + $"Count Herbivore = {countHerbivore}");
         }
+        public static void GrassAdd(Map map)
+        {
+            if (countGrass == 1)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    map.EntitySetup(new Grass() { coordinates = new Coordinates(6, 8) });
+                }
+            }
+        }
     }
 }

@@ -21,13 +21,23 @@ namespace SimulationCourse
             actions.InitActions(map);
             SimulationInfo.WriteCountEntitys(map);
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
-                Thread.Sleep(100);
-                actions.MM(map);
-               //mapConsoleRenderer.Renderer(map);
-                SimulationInfo.WriteCountEntitys(map);
-                //mapConsoleRenderer.Renderer(map);
+                try
+                {
+                    Thread.Sleep(1);
+                    actions.MM(map);
+                    //mapConsoleRenderer.Renderer(map);
+                    SimulationInfo.WriteCountEntitys(map);
+                    SimulationInfo.GrassAdd(map);
+                    //mapConsoleRenderer.Renderer(map);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
             
             
