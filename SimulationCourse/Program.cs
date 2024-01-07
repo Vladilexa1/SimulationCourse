@@ -39,8 +39,8 @@ namespace SimulationCourse
                 }
                 
             }
-            
-            
+
+            Console.WriteLine("закончились иттерации");
             Console.ReadLine();
         }
         // переделать постанвку фигур на карту

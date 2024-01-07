@@ -11,7 +11,19 @@ namespace SimulationCourse.Entitys
         public int HP;
         public int Velocity;
         public abstract Entity MakeMove(Map map);
-        public abstract Coordinates FindNearestFood(Map map, Coordinates coordinates);
         public abstract void EatFood(Map map, Coordinates coordinates);
+        public void ShiftCreature(List<Coordinates> pathToFood, Coordinates coordinatesNearestFood)
+        {
+            for (int i = 0; i < Velocity; i++)
+            {
+                if (coordinates.CalculatedDistanse(this.coordinates, coordinatesNearestFood) != 1)
+                {
+                    if (pathToFood.Count > i)
+                    {
+                        this.coordinates = pathToFood[i];
+                    }
+                }
+            }
+        }
     }
 }

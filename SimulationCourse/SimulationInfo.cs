@@ -21,29 +21,41 @@ namespace SimulationCourse
             countHerbivore = 0;
             foreach (var item in map.Maps)
             {
-                if (item.Value.GetType() == new Rock().GetType())
+                if (item.Value is Rock)
                 {
                     countRock++;
                 }
-                if (item.Value.GetType() == new Grass().GetType())
+                if (item.Value is Grass)
                 {
                     countGrass++;
                 }
-                if (item.Value.GetType() == new Herbivore().GetType())
+                if (item.Value is Herbivore)
                 {
                     countHerbivore++;
                 }
             }
             Console.WriteLine($"Count Rock = {countRock}" + "  " + $"Count Grass = {countGrass}" + "  " 
-                + $"Count Herbivore = {countHerbivore}");
+                + $"Count Herbivore = {countHerbivore}"); // поправить
         }
         public static void GrassAdd(Map map)
         {
-            if (countGrass == 1)
+            MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
+            if (countGrass < 10)
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    map.EntitySetup(new Grass() { coordinates = new Coordinates(6, 8) });
+                    Grass grass = new Grass();
+                    map.EntitySetup(grass);
+                    mapConsoleRenderer.RenderOneEntity(grass);
+                }
+            }
+            if (countHerbivore < 3)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Herbivore herbivore = new Herbivore();
+                    map.EntitySetup(herbivore);
+                    mapConsoleRenderer.RenderOneEntity(herbivore);
                 }
             }
         }

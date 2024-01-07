@@ -16,8 +16,6 @@ namespace SimulationCourse.Entitys
         // если координаты все пусты в следующем ходу и прошлые координаты жто еда, продолжить путь к ней
         // 
         // 
-        private List<Coordinates> PathToFood;
-        Coordinates coordinatesNearestFood;
         public Herbivore()
         {
             color = Color.Blue;
@@ -26,55 +24,18 @@ namespace SimulationCourse.Entitys
         }
         public override Entity MakeMove(Map map)
         {
-            coordinatesNearestFood = FindNearestFood(map, this.coordinates);
+            var coordinatesNearestFood = map.FindNearestFood(this.coordinates, map.GetCoordinatesAllGrass());
             PathFinder pathFinder = new PathFinder(this.coordinates, map);
-            PathToFood = pathFinder.GetPath(coordinatesNearestFood);
+            var PathToFood = pathFinder.GetPath(coordinatesNearestFood);
             if (coordinates.CalculatedDistanse(this.coordinates, coordinatesNearestFood) != 1)
             {
-                ShiftCreature();
+                ShiftCreature(PathToFood, coordinatesNearestFood);
             }
             else
             {
                 EatFood(map, coordinatesNearestFood);
             }
             return this;
-        }
-        private void ShiftCreature()
-        {
-            for (int i = 0; i < Velocity; i++)
-            {
-                if (coordinates.CalculatedDistanse(this.coordinates, coordinatesNearestFood) != 1)
-                {
-                    if (PathToFood.Count > i)
-                    {
-                        this.coordinates = PathToFood[i];
-                    }
-                    
-                }
-            }
-        }
-        public override Coordinates FindNearestFood(Map map, Coordinates coordinates)
-        {
-            HashSet<Coordinates> coordinatesFood = new HashSet<Coordinates>();
-            foreach (var entitys in map.Maps)
-            {
-                if (map.ThisCoordinatesIsGrass(entitys.Key))
-                {
-                    coordinatesFood.Add(entitys.Key);
-                }
-            }
-            Coordinates nearestFood = null;
-            int minDistanse = int.MaxValue;
-            foreach (var foodCoordinates in coordinatesFood)
-            {
-                int distanse = coordinates.CalculatedDistanse(coordinates, foodCoordinates);
-                if (distanse < minDistanse)
-                {
-                    minDistanse = distanse;
-                    nearestFood = foodCoordinates;
-                }
-            }
-            return nearestFood;
         }
         public override void EatFood(Map map, Coordinates coordinates)
         {

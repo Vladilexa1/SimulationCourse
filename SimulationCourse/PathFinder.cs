@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SimulationCourse
 {
-    internal class PathFinder // переделать в А*
+    internal class PathFinder
     {
         private Node startNode;
         private Map map;
@@ -30,13 +30,14 @@ namespace SimulationCourse
             {
                 Node current = queue.Where(x => x.F == queue.Min(y => y.F)).FirstOrDefault();
 
-                if (current.coordinates.Equals(targetCoordinates)) return current;
+                if (current.coordinates.Equals(targetCoordinates))
+                { return current; }
 
                 chectNode.Add(current);
 
                 queue.Remove(current);
 
-                var neughbors = GetNeighbors(current);
+                var neughbors = GetNeighbors(current, targetCoordinates);
                 foreach (var neighbor in neughbors)
                 {
                     if (chectNode.Contains(neighbor)) continue;
@@ -69,7 +70,7 @@ namespace SimulationCourse
             path.Reverse();
             return path;
         }
-        private List<Node> GetNeighbors(Node current)
+        private List<Node> GetNeighbors(Node current, Coordinates targetCoordinates)
         {
             List<Node> neighbors = new List<Node>();
             var leftNeighbors = new Coordinates(current.coordinates.X - 1, current.coordinates.Y);
@@ -77,17 +78,18 @@ namespace SimulationCourse
             var topNeighbors = new Coordinates(current.coordinates.X, current.coordinates.Y - 1);
             var bottomNeighbors = new Coordinates(current.coordinates.X, current.coordinates.Y + 1);
 
-            if (IsMoveable(rightNeighbors)) neighbors.Add(new Node(rightNeighbors, current, current.G + 1));
-            if (IsMoveable(leftNeighbors)) neighbors.Add(new Node(leftNeighbors, current, current.G + 1));
-            if (IsMoveable(bottomNeighbors)) neighbors.Add(new Node(bottomNeighbors, current, current.G + 1));
-            if (IsMoveable(topNeighbors)) neighbors.Add(new Node(topNeighbors, current, current.G + 1));
+            if (IsMoveable(rightNeighbors, targetCoordinates)) neighbors.Add(new Node(rightNeighbors, current, current.G + 1));
+            if (IsMoveable(leftNeighbors, targetCoordinates)) neighbors.Add(new Node(leftNeighbors, current, current.G + 1));
+            if (IsMoveable(bottomNeighbors, targetCoordinates)) neighbors.Add(new Node(bottomNeighbors, current, current.G + 1));
+            if (IsMoveable(topNeighbors, targetCoordinates)) neighbors.Add(new Node(topNeighbors, current, current.G + 1));
             return neighbors;
         }
 
-        private bool IsMoveable(Coordinates coordinates)
+        private bool IsMoveable(Coordinates coordinates, Coordinates targetCoordinates)
         {
+            if (coordinates.Equals(targetCoordinates)) return true;
             if (!coordinates.CoordinatesAreOnMap(coordinates)) return false;
-            if (map.Maps.ContainsKey(coordinates) && !map.ThisCoordinatesIsGrass(coordinates)) return false;
+            if (map.Maps.ContainsKey(coordinates)) return false;
             return true;
         }
     }

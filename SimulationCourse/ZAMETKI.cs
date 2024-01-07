@@ -31,5 +31,28 @@ namespace SimulationCourse
         //        map.NewEntitySetup(newEntities[i]);
         //    }
         //}
+        //public override Coordinates FindNearestFood(Map map, Coordinates coordinates)
+        //{
+        //    HashSet<Coordinates> coordinatesFood = new HashSet<Coordinates>();
+        //    foreach (var entitys in map.Maps)
+        //    {
+        //        if (map.ThisCoordinatesIsGrass(entitys.Key))
+        //        {
+        //            coordinatesFood.Add(entitys.Key);
+        //        }
+        //    }
+        //    Coordinates nearestFood = null;
+        //    int minDistanse = int.MaxValue;
+        //    foreach (var foodCoordinates in coordinatesFood)
+        //    {
+        //        int distanse = coordinates.CalculatedDistanse(coordinates, foodCoordinates);
+        //        if (distanse < minDistanse)
+        //        {
+        //            minDistanse = distanse;
+        //            nearestFood = foodCoordinates;
+        //        }
+        //    }
+        //    return nearestFood;
+        //}
     }
 }

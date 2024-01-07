@@ -20,19 +20,23 @@ namespace SimulationCourse
             }
             for (int i = 0; i < 100; i++)
             {
-                map.EntitySetup(new Grass() { coordinates = new Coordinates(6, 8) });
+                map.EntitySetup(new Grass());
             }
             for (int i = 0; i < 10; i++)
             {
-                map.EntitySetup(new Herbivore() { coordinates = new Coordinates(5, 5) });
+                map.EntitySetup(new Herbivore());
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                map.EntitySetup(new Predator());
             }
             mapConsoleRenderer.Renderer(map);
         }
         public void MM(Map map)
         {
+            MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
             foreach (var item in map.Maps.ToList())
             {
-                MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
                 if (item.Value is Herbivore herbivore)
                 {
                     map.DeleteEntitys(item.Value.coordinates);
@@ -40,10 +44,15 @@ namespace SimulationCourse
                     map.NewEntitySetup(herbivore.MakeMove(map));
                     mapConsoleRenderer.RenderOneEntity(item.Value);
                 }
+                if (item.Value is Predator predator)
+                {
+                    map.DeleteEntitys(item.Value.coordinates);
+                    mapConsoleRenderer.DeleteEntitys(item.Value.coordinates);
+                    map.NewEntitySetup(predator.MakeMove(map));
+                    mapConsoleRenderer.RenderOneEntity(item.Value);
+                }
             }
-           
-            
         }
-       
+        
     }
 }
