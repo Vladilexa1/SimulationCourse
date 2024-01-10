@@ -16,32 +16,10 @@ namespace SimulationCourse.Entitys
         }
         public override Entity MakeMove(Map map)
         {
-            MapConsoleRenderer renderer = new MapConsoleRenderer();
-            var coordinatesNearestFood = map.FindNearestFood(this.coordinates, map.GetCoordinatesAllHerbivore());
-            PathFinder pathFinder = new PathFinder(this.coordinates, map);
-            var PathToFood = pathFinder.GetPath(coordinatesNearestFood);
-            if (coordinates.CalculatedDistanse(this.coordinates, coordinatesNearestFood) != 1)
-            {
-                HP -= 3;
-                if (HP < 0)
-                {
-                    map.DeleteEntitys(this.coordinates);
-                    renderer.DeleteEntitys(this.coordinates);
-                }
-                else
-                {
-                    ShiftCreature(PathToFood, coordinatesNearestFood);
-                }
-            }
-            else
-            {
-                EatFood(map, coordinatesNearestFood);
-            }
-            return this;
+            return base.MakeMove(map);
         }
         public override void EatFood(Map map, Coordinates coordinates)
         {
-            MapConsoleRenderer renderer = new MapConsoleRenderer();
             if (map.ThisCoordinatesIsHerbivore(coordinates))
             {
                 if (((Herbivore)map.Maps[coordinates]).HP != 0)
@@ -50,11 +28,16 @@ namespace SimulationCourse.Entitys
                 }
                 else
                 {
+                    MapConsoleRenderer renderer = new MapConsoleRenderer();
                     map.DeleteEntitys(coordinates);
                     renderer.DeleteEntitys(coordinates);
                 }
-                HP += 0;
+                HP += 6;
             }
+        }
+        public override HashSet<Coordinates> GetAllFood(Map map)
+        {
+           return map.GetCoordinatesAllHerbivore();
         }
     }
 }
