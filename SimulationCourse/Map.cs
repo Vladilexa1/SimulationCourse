@@ -10,11 +10,6 @@ namespace SimulationCourse
     public class Map
     {
         public Dictionary<Coordinates, Entity> Maps = new Dictionary<Coordinates, Entity>();
-
-        public Map()
-        {
-
-        }
         public void EntitySetup(Entity entity)
         {
             Maps.Add(entity.GetUnikalCoordinates(Maps), entity);

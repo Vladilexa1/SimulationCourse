@@ -32,7 +32,7 @@ namespace SimulationCourse
             }
             mapConsoleRenderer.Renderer(map);
         }
-        public void MM(Map map)
+        public void turnActions(Map map)
         {
             MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
             foreach (var item in map.Maps.ToList())
@@ -52,7 +52,34 @@ namespace SimulationCourse
                     mapConsoleRenderer.RenderOneEntity(item.Value);
                 }
             }
+            AddGrass(map);
+            AddHerbivore(map);
         }
-        
+        public void AddGrass(Map map)
+        {
+            MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
+            if (Simulation.countGrass < 10)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Grass grass = new Grass();
+                    map.EntitySetup(grass);
+                    mapConsoleRenderer.RenderOneEntity(grass);
+                }
+            }
+        }
+        public void AddHerbivore(Map map) 
+        {
+            MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
+            if (Simulation.countHerbivore < 3)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Herbivore herbivore = new Herbivore();
+                    map.EntitySetup(herbivore);
+                    mapConsoleRenderer.RenderOneEntity(herbivore);
+                }
+            }
+        }
     }
 }
