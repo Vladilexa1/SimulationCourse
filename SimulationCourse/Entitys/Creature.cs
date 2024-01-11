@@ -39,6 +39,6 @@ namespace SimulationCourse.Entitys
             }
         }
         public abstract void EatFood(Map map, Coordinates coordinates);
-        public abstract HashSet<Coordinates> GetAllFood(Map map);
+        public abstract HashSet<Entity> GetAllFood(Map map);
     }
 }

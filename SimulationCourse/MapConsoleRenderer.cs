@@ -33,9 +33,9 @@ namespace SimulationCourse
         }
         private void RenderEntity(Map map)
         {
-            foreach (var item in map.Maps)
+            foreach (var item in map.GetAllEntity())
             {
-                new Pixel(item.Key.X, item.Key.Y, colorizePixel(item.Value)).setOnePixel();
+                new Pixel(item.coordinates.X, item.coordinates.Y, colorizePixel(item)).setOnePixel();
             }
         }
         public void DeleteEntitys(Coordinates coordinates)

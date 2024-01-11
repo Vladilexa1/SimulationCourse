@@ -84,12 +84,11 @@ namespace SimulationCourse
             if (IsMoveable(topNeighbors, targetCoordinates)) neighbors.Add(new Node(topNeighbors, current, current.G + 1));
             return neighbors;
         }
-
         private bool IsMoveable(Coordinates coordinates, Coordinates targetCoordinates)
         {
             if (coordinates.Equals(targetCoordinates)) return true;
             if (!coordinates.CoordinatesAreOnMap(coordinates)) return false;
-            if (map.Maps.ContainsKey(coordinates)) return false;
+            if (!map.IsSquareEmpty(coordinates)) return false;
             return true;
         }
     }

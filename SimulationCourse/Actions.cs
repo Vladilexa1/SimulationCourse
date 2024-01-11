@@ -35,22 +35,19 @@ namespace SimulationCourse
         public void turnActions(Map map)
         {
             MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
-            foreach (var item in map.Maps.ToList())
+            foreach (var item in map.GetAllHerbivore())
             {
-                if (item.Value is Herbivore herbivore)
-                {
-                    map.DeleteEntitys(item.Value.coordinates);
-                    mapConsoleRenderer.DeleteEntitys(item.Value.coordinates);
-                    map.NewEntitySetup(herbivore.MakeMove(map));
-                    mapConsoleRenderer.RenderOneEntity(item.Value);
-                }
-                if (item.Value is Predator predator)
-                {
-                    map.DeleteEntitys(item.Value.coordinates);
-                    mapConsoleRenderer.DeleteEntitys(item.Value.coordinates);
-                    map.NewEntitySetup(predator.MakeMove(map));
-                    mapConsoleRenderer.RenderOneEntity(item.Value);
-                }
+                map.DeleteEntitys(item.coordinates);
+                mapConsoleRenderer.DeleteEntitys(item.coordinates);
+                map.EntitySetup((item as Herbivore).MakeMove(map));
+                mapConsoleRenderer.RenderOneEntity(item);
+            }
+            foreach (var item in map.GetAllPredator())
+            {
+                map.DeleteEntitys(item.coordinates);
+                mapConsoleRenderer.DeleteEntitys(item.coordinates);
+                map.EntitySetup((item as Predator).MakeMove(map));
+                mapConsoleRenderer.RenderOneEntity(item);
             }
             AddGrass(map);
             AddHerbivore(map);

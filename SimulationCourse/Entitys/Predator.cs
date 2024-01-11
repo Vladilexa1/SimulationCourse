@@ -22,9 +22,9 @@ namespace SimulationCourse.Entitys
         {
             if (map.ThisCoordinatesIsHerbivore(coordinates))
             {
-                if (((Herbivore)map.Maps[coordinates]).HP != 0)
+                if ((map.GetEntityForCoordinates(coordinates) as Herbivore).HP != 0)
                 {
-                    ((Herbivore)map.Maps[coordinates]).HP -= 5;
+                    (map.GetEntityForCoordinates(coordinates) as Herbivore).HP -= 5;
                 }
                 else
                 {
@@ -35,9 +35,9 @@ namespace SimulationCourse.Entitys
                 HP += 6;
             }
         }
-        public override HashSet<Coordinates> GetAllFood(Map map)
+        public override HashSet<Entity> GetAllFood(Map map)
         {
-           return map.GetCoordinatesAllHerbivore();
+           return map.GetAllHerbivore();
         }
     }
 }

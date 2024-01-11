@@ -30,9 +30,9 @@ namespace SimulationCourse.Entitys
                 HP += 5;
             }
         }
-        public override HashSet<Coordinates> GetAllFood(Map map)
+        public override HashSet<Entity> GetAllFood(Map map)
         {
-            return map.GetCoordinatesAllGrass();
+            return map.GetAllGrass();
         }
     }
 }
