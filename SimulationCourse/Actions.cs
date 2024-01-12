@@ -32,7 +32,7 @@ namespace SimulationCourse
             }
             mapConsoleRenderer.Renderer(map);
         }
-        public void turnActions(Map map)
+        public void TurnActions(Map map)
         {
             MapConsoleRenderer mapConsoleRenderer = new MapConsoleRenderer();
             foreach (var item in map.GetAllHerbivore())
