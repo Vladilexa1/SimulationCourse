@@ -27,28 +27,28 @@ namespace SimulationCourse
             Console.SetCursorPosition((Program.MAP_HEIGTH / 3)*2, Program.MAP_WIDTH + 1);
             Console.Write($"Count Moves = {countMoves}     ");
         }
-        public static void StartSimulation()
+        public static void StartSimulation(Map map)
+        {
+            while (!Program.CommandKeyIsPressed())
+            {
+                NextTurn(map);
+            }
+        }
+        public static Map InitSimulation()
         {
             Map map = new Map();
             Actions actions = new Actions();
             actions.InitActions(map);
             WriteCountEntitys(map);
-            while (true)
-            {
-                NextTurn(map);
-                countMoves++;
-            }
+            return map;
         }
         public static void NextTurn(Map map) 
         {
             Actions actions = new Actions();
             Thread.Sleep(1);
-            actions.turnActions(map);
+            actions.TurnActions(map);
             WriteCountEntitys(map);
-        }
-        public static void PauseSimulation()
-        {
-            Console.ReadKey();
+            countMoves++;
         }
     }
 }
